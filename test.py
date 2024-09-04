@@ -1,38 +1,41 @@
-class MushroomsCollector:
-    # Проверьте, нет ли здесь ошибки:
-    def __init__(self):
-        self.mushrooms = []
+class Phone:
 
-    def is_poisonous(self, mushroom_name):
-        self.mushroom_name = mushroom_name
-        if self.mushroom_name == 'Мухомор' or self.mushroom_name == 'Поганка':
-            return True
-        return False
+    line_type = 'проводной'
 
-    # Допишите метод.
-    def add_mushroom(self, mushroom_name):
-        self.mushroom_name = mushroom_name
-        if self.is_poisonous(self.mushroom_name):
-            print('Нельзя добавить ядовитый гриб')
-        else:
-            list.append(self.mushrooms, mushroom_name)
-    # Напишите магический метод __str__,
-    # возвращающий перечень грибов из списка mushrooms
-    # через запятую.
+    def __init__(self, dial_type_value):
+        self.dial_type = dial_type_value
 
-    def __str__(self):
-        result = ', '.join(map(str, self.mushrooms))
-        return result
+    def ring(self):
+        print('Дзззззыыыыыыыынь!')
+
+    def call(self, phone_number):
+        print(f'Звоню по номеру {phone_number}! Тип связи - {self.line_type}.')
 
 
-# Пример запуска для самопроверки
-collector_1 = MushroomsCollector()
-collector_1.add_mushroom('Мухомор')
-collector_1.add_mushroom('Подосиновик')
-collector_1.add_mushroom('Белый')
-print(collector_1)
+class MobilePhone(Phone):
+    # Переопределить значение атрибута line_type класса Phone.
+    line_type = 'беспроводной'
 
-collector_2 = MushroomsCollector()
-collector_2.add_mushroom('Лисичка')
-print(collector_1)
-print(collector_2)
+    # Переопределить метод ring() класса Phone.
+    def ring(self):
+        print('Дзынь-дзынь!')
+
+
+rotary_phone = Phone('дисковый')
+mobile_phone = MobilePhone('сенсорный')
+
+# Распечатать значение атрибута line_type для объекта класса Phone.
+print(rotary_phone.line_type)
+# Вызвать метод ring() для объекта класса Phone.
+rotary_phone.ring()
+
+# Распечатать значение атрибута line_type для объекта класса MobilePhone.
+print(mobile_phone.line_type)
+# Вызвать метод ring() для объекта класса MobilePhone.
+mobile_phone.ring()
+
+# Вывод:
+# проводной
+# Дзззззыыыыыыыынь!
+# беспроводной
+# Дзынь-дзынь!
