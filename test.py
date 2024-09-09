@@ -1,52 +1,30 @@
-from datetime import datetime
+class Customer:
+    def __init__(self, name):
+        self.name = name
+        # Добавьте сюда атрибут "скидка" со значением по умолчанию 10.
+        self.__discount = 10
 
-class Store:
-    def __init__(self, address):
-        self.address = address
+    # Реализуйте методы get_price() и set_discount().
+    def get_price(self, original_price):
+        return round(original_price - ((original_price * self.__discount) / 100), 2)
 
-    def is_open(self, date):
-        # Метод is_open() в родительском классе всегда возвращает False,
-        # это "код-заглушка", метод, предназначенный для переопределения
-        # в дочерних классах.
-        return False
-
-    def get_info(self, date_str):
-        # С помощью шаблона даты преобразуйте строку date_str в объект даты:
-        date_object = datetime.strptime(date_str, "%d.%m.%Y")
-        
-        # Передайте в метод is_open() объект даты date_object и определите,
-        # работает ли магазин в указанную дату. 
-        # В зависимости от результата будет выбрано значение
-        # для переменной info.
-        if self.is_open(date_object):
-            info = 'работает'
+    def set_discount(self, new_discount):
+        if new_discount > 80:
+            self.__discount = 80
         else:
-            info = 'не работает'
-        return f'Магазин по адресу {self.address} {date_str} {info}'
+            self.__discount = new_discount
 
-class MiniStore(Store):
-    def is_open(self, date):
-        # Минимаркеты не работают по будням (по субботам и воскресеньям)
-        return date.weekday() < 5
 
-class WeekendStore(Store):
-    def is_open(self, date):
-        # Магазины выходного дня работают только по субботам и воскресеньям
-        return date.weekday() >= 5
+# Создаем экземпляр класса Customer
+customer = Customer("Иван Иванович")
 
-class NonStopStore(Store):
-    def is_open(self, date):
-        # Non-stop магазины работают всегда
-        return True
+# Получаем цену с учетом скидки
+price_with_discount = customer.get_price(100)
+print(f"Цена с учетом скидки: {price_with_discount}")
 
-mini_store = MiniStore('Улица Немига, 57')
-print(mini_store.get_info('29.03.2024'))
-print(mini_store.get_info('30.03.2024'))
+# Устанавливаем новую скидку
+customer.set_discount(80)
 
-weekend_store = WeekendStore('Улица Толе би, 321')
-print(weekend_store.get_info('29.03.2024'))
-print(weekend_store.get_info('30.03.2024'))
-
-non_stop_store = NonStopStore('Улица Арбат, 60')
-print(non_stop_store.get_info('29.03.2024'))
-print(non_stop_store.get_info('30.03.2024'))
+# Получаем цену с обновленной скидкой
+price_with_updated_discount = customer.get_price(100)
+print(f"Цена с обновленной скидкой: {price_with_updated_discount}")
