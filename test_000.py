@@ -1,6 +1,5 @@
 from typing import Optional
 
-
 class User:
     def __init__(
             self,
@@ -15,12 +14,10 @@ class User:
         self.last_name = last_name
         self.username = username
 
-    # Опишите метод класса with_name.
     @classmethod
     def with_name(cls, first_name, last_name):
         return cls(first_name=first_name, last_name=last_name)
 
-    # Опишите метод класса with_username.
     @classmethod
     def with_username(cls, username):
         if not cls.is_username_allowed(username):
@@ -35,15 +32,19 @@ class User:
             return True
         else:
             return False
-        
-    # Опишите метод-свойство full_name.
+
     @property
     def full_name(self):
-        pass
+        if self.first_name and self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        elif self.username:
+            return f"@{self.username}"
+        else:
+            return "Информация о пользователе недоступна"
 
-
+# Пример использования:
 stas = User.with_name('Стас', 'Басов')
-print(stas.full_name)
+print(stas.full_name)  # Выведет: Стас Басов
 
 # Попробуем создать пользователя с "запрещённым" именем.
-# ne_stas = User.with_username('admin_nestas_anonymous')
+ne_stas = User.with_username('admin_nestas_anonymous')
